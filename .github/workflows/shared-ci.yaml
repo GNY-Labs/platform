@@ -35,7 +35,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Look for Dockerfiles
+        id: find
+        run: |
+          if [ -n "$(find . -name 'Dockerfile' -not -path './.git/*' -print -quit)" ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Lint Dockerfiles
+        if: steps.find.outputs.found == 'true'
         uses: hadolint/hadolint-action@v3.1.0
         with:
           recursive: true
