@@ -38,7 +38,8 @@ jobs:
       - name: Look for Dockerfiles
         id: find
         run: |
-          if [ -n "$(find . -name 'Dockerfile' -not -path './.git/*' -print -quit)" ]; then
+          first=$(find . -name 'Dockerfile' -not -path './.git/*' -print -quit)
+          if [ -n "$first" ]; then
             echo "found=true" >> "$GITHUB_OUTPUT"
           else
             echo "found=false" >> "$GITHUB_OUTPUT"
