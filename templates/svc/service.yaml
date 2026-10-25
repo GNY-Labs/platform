@@ -1,0 +1,17 @@
+contract: 1
+name: <service-name>
+version: 0.1.0
+ports:
+  - name: <port-name>
+    default: <default-port>
+requires: []
+health:
+  command: <health-command>
+metrics:
+  exporter: <exporter-name>
+  port: <metrics-port>
+  path: /metrics
+  dashboards:
+    - observability/dashboards/<service-name>.json
+env:
+  - <VARIABLE_NAME>
