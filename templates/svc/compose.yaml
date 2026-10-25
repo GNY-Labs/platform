@@ -1,0 +1,25 @@
+services:
+  <service-name>:
+    image: <image>:<tag>
+    ports:
+      - "${PORT}:<container-port>"
+    env_file: .env
+    healthcheck:
+      test: ["CMD-SHELL", "<health-command>"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - <service-name>-data:/<data-path>
+
+  <exporter-name>:
+    image: <exporter-image>:<tag>
+    profiles: ["metrics"]
+    ports:
+      - "<metrics-port>:<metrics-port>"
+    depends_on:
+      <service-name>:
+        condition: service_healthy
+
+volumes:
+  <service-name>-data:
